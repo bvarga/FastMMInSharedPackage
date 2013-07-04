@@ -1,7 +1,7 @@
 program app;
 
 uses
-  fastmm4,
+  //fastmm4,
   Vcl.Forms,
   main in 'main.pas' {Form1};
 
