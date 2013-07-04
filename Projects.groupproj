@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{5CD1FEFB-5816-40CF-AA07-6683DD4ECECB}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="app.dproj">
+            <Dependencies>dll.dproj;SharedFastMM.dproj</Dependencies>
+        </Projects>
+        <Projects Include="SharedFastMM.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dll.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="app" DependsOnTargets="dll;SharedFastMM">
+        <MSBuild Projects="app.dproj"/>
+    </Target>
+    <Target Name="app:Clean" DependsOnTargets="dll:Clean;SharedFastMM:Clean">
+        <MSBuild Projects="app.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="app:Make" DependsOnTargets="dll:Make;SharedFastMM:Make">
+        <MSBuild Projects="app.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SharedFastMM">
+        <MSBuild Projects="SharedFastMM.dproj"/>
+    </Target>
+    <Target Name="SharedFastMM:Clean">
+        <MSBuild Projects="SharedFastMM.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SharedFastMM:Make">
+        <MSBuild Projects="SharedFastMM.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dll">
+        <MSBuild Projects="dll.dproj"/>
+    </Target>
+    <Target Name="dll:Clean">
+        <MSBuild Projects="dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dll:Make">
+        <MSBuild Projects="dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="app;SharedFastMM;dll"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="app:Clean;SharedFastMM:Clean;dll:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="app:Make;SharedFastMM:Make;dll:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
